@@ -8,6 +8,7 @@ const NewPassword = () => {
     const [form] = Form.useForm();
     const onFinish = (values) => {
       console.log('Received values of form: ', values);
+      console.log('heelojfj');
     };
   return (
     <div className='flex flex-col justify-between p-[16px] min-h-screen bg-[#F8F8F8]'>
