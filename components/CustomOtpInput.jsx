@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import OTPInput from 'react-otp-input';
 
-const CustomOtpInput = () => {
-    const [otp, setOtp] = useState([]);
+const CustomOtpInput = ({otp,setOtp,handleChange}) => {
+    // const [otp, setOtp] = useState([]);
 
-    const handleChange = (otp) => {
-        setOtp(otp);
-      };
+    // const handleChange = (otp) => {
+    //     setOtp(otp);
+    //   };
     const renderInput = (props, index) => {
         let bgColor = "#FFFFFF";
     
