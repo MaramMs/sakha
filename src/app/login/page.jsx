@@ -1,12 +1,30 @@
 "use client";
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, message } from "antd";
+import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const LoginIn = () => {
-  const onFinish = (values) => {
-    console.log("Received values of form: ", values);
-  };
+const router = useRouter();
+
+const onFinish = async ({ email, password }) => {
+  try {
+    const res = await axios.post('https://sakha.danatportal.com/api/users/login', {
+      email,
+      password
+    });
+    message.success(res.data.message_en);
+    router.push('/profile');
+} catch (error) {
+  if (error.response && error.response.data) {
+    message.error(error.response.data.message_en);
+  } else {
+    message.error(error.message);
+  }
+}
+
+}
   return (
     <div className="flex min-h-screen flex-col  gap-[40px] p-[16px] bg-[#cccccc24]  ">
       <div className="flex justify-center flex-col items-center gap-[8px]">
@@ -62,9 +80,11 @@ const LoginIn = () => {
         </div>
         </Form.Item>
         <Form.Item>
-          <a className="login-form-forgot flex justify-end text-[#000] text-[14px] font-[400]" href="" >
+        <Link href='/resetpassword' legacyBehavior>
+        <a className="login-form-forgot flex justify-end text-[#000] text-[14px] font-[400]">
             Forgot password ?
           </a>
+        </Link>
         </Form.Item>
 
         <Form.Item>
@@ -110,5 +130,6 @@ const LoginIn = () => {
     </div>
   );
 };
+
 
 export default LoginIn;
