@@ -1,15 +1,20 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Header from '../../../components/Header'
 import { Button, Input, message } from 'antd'
 import BackToLogin from '../../../components/BackToLogin'
 import { useRouter } from 'next/navigation'
+import { UserContext } from '@/contexts/UserContext'
 
 const ResetPassword = () => {
   const [email ,setEmail] = useState('');
-  const router = useRouter()
+  const router = useRouter();
+  const {setUser} = useContext(UserContext)
 
   const handleUserEmail = async() =>{
+ setUser({
+  email
+ })
     router.push('/otpCode')
     
   //   try {
