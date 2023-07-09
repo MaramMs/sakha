@@ -1,4 +1,6 @@
 "use client";
+import { useContext } from "react";
+import { UserContext } from "@/contexts/UserContext";
 import { Button, Form, Input, message } from "antd";
 import axios from "axios";
 import Image from "next/image";
@@ -6,25 +8,32 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 const LoginIn = () => {
-const router = useRouter();
-
-const onFinish = async ({ email, password }) => {
-  try {
-    const res = await axios.post('https://sakha.danatportal.com/api/users/login', {
-      email,
-      password
-    });
-    message.success(res.data.message_en);
-    router.push('/profile');
-} catch (error) {
-  if (error.response && error.response.data) {
-    message.error(error.response.data.message_en);
-  } else {
-    message.error(error.message);
-  }
-}
-
-}
+  const router = useRouter();
+  const { user, setUser } = useContext(UserContext);
+  console.log(user, "user");
+  const onFinish = async ({ email, password }) => {
+    try {
+      const res = await axios.post(
+        "https://sakha.danatportal.com/api/users/login",
+        {
+          email,
+          password,
+        }
+      );
+      setUser({
+        email,
+        password,
+      });
+      message.success(res.data.message_en);
+      router.push("/profile");
+    } catch (error) {
+      if (error.response && error.response.data) {
+        message.error(error.response.data.message_en);
+      } else {
+        message.error(error.message);
+      }
+    }
+  };
   return (
     <div className="flex min-h-screen flex-col  gap-[40px] p-[16px] bg-[#cccccc24]  ">
       <div className="flex justify-center flex-col items-center gap-[8px]">
@@ -71,20 +80,22 @@ const onFinish = async ({ email, password }) => {
             },
           ]}
         >
-        <div className="flex flex-col gap-[10px]">
-            <label className="text-[#000000] font-[400] text-[14px]">Your Password</label>
-        <Input.Password
-          placeholder="************"
-            className="bg-[#FFFFFF] rounded-[8px] h-[48px] py-[14px] px-[16px] border-[#fff]"
-          />
-        </div>
+          <div className="flex flex-col gap-[10px]">
+            <label className="text-[#000000] font-[400] text-[14px]">
+              Your Password
+            </label>
+            <Input.Password
+              placeholder="************"
+              className="bg-[#FFFFFF] rounded-[8px] h-[48px] py-[14px] px-[16px] border-[#fff]"
+            />
+          </div>
         </Form.Item>
         <Form.Item>
-        <Link href='/resetpassword' legacyBehavior>
-        <a className="login-form-forgot flex justify-end text-[#000] text-[14px] font-[400]">
-            Forgot password ?
-          </a>
-        </Link>
+          <Link href="/resetpassword" legacyBehavior>
+            <a className="login-form-forgot flex justify-end text-[#000] text-[14px] font-[400]">
+              Forgot password ?
+            </a>
+          </Link>
         </Form.Item>
 
         <Form.Item>
@@ -95,41 +106,40 @@ const onFinish = async ({ email, password }) => {
           >
             Log in
           </Button>
-
-      
         </Form.Item>
         <div className="flex justify-center items-center flex-col gap-[16px] mt-[24px]">
-            <p className="text-[#000000] text-[14px] font-[400]"> Or Continue With</p>
-            <div className="flex gap-[16px]">
-             <Button className="bg-[#fff] rounded-[48px] w-[48px] h-[48px] px-[16px] py-[14px] border-[#fff]">
-                <Image src='/images/face.svg' width={14.54} height={27.36}/>
-             </Button>
+          <p className="text-[#000000] text-[14px] font-[400]">
+            {" "}
+            Or Continue With
+          </p>
+          <div className="flex gap-[16px]">
+            <Button className="bg-[#fff] rounded-[48px] w-[48px] h-[48px] px-[16px] py-[14px] border-[#fff]">
+              <Image src="/images/face.svg" width={14.54} height={27.36} />
+            </Button>
 
-             <Button className="bg-[#fff] rounded-[48px] w-[48px] h-[48px] px-[16px] py-[14px] border-[#fff]">
-                <Image src='/images/google.svg' width={28} height={28}/>
-             </Button>
+            <Button className="bg-[#fff] rounded-[48px] w-[48px] h-[48px] px-[16px] py-[14px] border-[#fff]">
+              <Image src="/images/google.svg" width={28} height={28} />
+            </Button>
 
-             <Button className="bg-[#fff] rounded-[48px] w-[48px] h-[48px] px-[16px] py-[14px] border-[#fff]">
-                <Image src='/images/face.svg' width={14.54} height={27.36}/>
-             </Button>
+            <Button className="bg-[#fff] rounded-[48px] w-[48px] h-[48px] px-[16px] py-[14px] border-[#fff]">
+              <Image src="/images/face.svg" width={14.54} height={27.36} />
+            </Button>
+          </div>
+        </div>
 
-            </div>
-
-</div>
-
-<div className="flex justify-between h-[48px] items-center mt-[16px]">
-    <p className="text-[#000] font-[400] text-[13px]">Don’t have an account?</p>
-<Link href='/register'>
-<Button className="rounded-[8px] bg-[#EFF4EB] px-[16px] py-[14px] w-[146px] h-[48px] flex justify-center items-center text-[#669640] text-[16px] font-[500]">
-    Create Account!
-</Button>
-</Link>
-</div>
-
+        <div className="flex justify-between h-[48px] items-center mt-[16px]">
+          <p className="text-[#000] font-[400] text-[13px]">
+            Don’t have an account?
+          </p>
+          <Link href="/register">
+            <Button className="rounded-[8px] bg-[#EFF4EB] px-[16px] py-[14px] w-[146px] h-[48px] flex justify-center items-center text-[#669640] text-[16px] font-[500]">
+              Create Account!
+            </Button>
+          </Link>
+        </div>
       </Form>
     </div>
   );
 };
-
 
 export default LoginIn;
