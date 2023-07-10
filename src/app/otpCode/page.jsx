@@ -8,8 +8,8 @@ import CustomOtpInput from "../../../components/CustomOtpInput";
 import { useRouter } from "next/navigation";
 
 const OtpCode = () => {
-  const [otp, setOtp] = useState([]);
   const router = useRouter();
+  const [otp, setOtp] = useState([]);
   console.log(otp,'otp');
 
   const handleChange = (otp) => {

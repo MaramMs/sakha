@@ -4,15 +4,25 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import Header from "../../../components/Header";
 import CustomOtpInput from "../../../components/CustomOtpInput";
+import { useRouter } from "next/navigation";
 
 const VerifyEmail = () => {
+  const [otp, setOtp] = useState([]);
+  const router = useRouter()
+  console.log(otp,'otp');
+
+  const handleChange = (otp) => {
+      setOtp(otp);
+    };
   const [timeSendCode, setTimeSendCode] = useState(59);
   const [timerActive, setTimerActive] = useState(true);
 
   const handleSendNewCodeClick = () => {
     setTimerActive(true);
   };
-
+const handleVerifyCode =() =>{
+  router.push('/profile')
+}
   useEffect(() => {
     if (timerActive) {
       const timer = setInterval(() => {
@@ -49,7 +59,7 @@ const VerifyEmail = () => {
         </div>
 
         <div className="flex flex-col gap-[16px]">
-          <CustomOtpInput />
+          <CustomOtpInput otp={otp} handleChange={handleChange}/>
           <div className="flex flex-col text-[12px] font-[900] text-center">
             <span className="text-[#000000]">{`00:${timeSendCode} sec`}</span>
             <span className={sendNewCodeClass} onClick={handleSendNewCodeClick}>
@@ -57,13 +67,13 @@ const VerifyEmail = () => {
             </span>
           </div>
           <div className="flex flex-col gap-[8px]">
-            <Button className="text-[#fff] bg-[#669640] text-[900] text-[16px] rounded-[8px] px-[16px] py-[14px] flex justify-center items-center h-[48px]">
-              OPEN EMAIL APP
+            <Button className="text-[#fff] bg-[#669640] text-[900] text-[16px] rounded-[8px] px-[16px] py-[14px] flex justify-center items-center h-[48px]" onClick={handleVerifyCode}>
+              Verify
             </Button>
 
-            <Button className="text-[#669640] bg-[#EFF4EB] text-[500] text-[16px] rounded-[8px] px-[16px] py-[14px] flex justify-center items-center h-[48px]">
+            {/* <Button className="text-[#669640] bg-[#EFF4EB] text-[500] text-[16px] rounded-[8px] px-[16px] py-[14px] flex justify-center items-center h-[48px]" onClick={handleVerifyCode}>
               VERIFY LATER
-            </Button>
+            </Button> */}
           </div>
         </div>
       </div>
