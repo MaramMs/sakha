@@ -1,18 +1,35 @@
 "use client";
-import React, { useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import Header from "../../../components/Header";
-import { Button, Avatar, Form, Input, Select, Checkbox, Radio } from "antd";
+import {
+  Button,
+  Avatar,
+  Form,
+  Input,
+  Select,
+  Checkbox,
+  Radio,
+  message,
+} from "antd";
 import Image from "next/image";
 import PhoneInput from "react-phone-number-input";
-import 'react-phone-number-input/style.css'
-import flags from 'react-phone-number-input/flags'
-
+import "react-phone-number-input/style.css";
+import flags from "react-phone-number-input/flags";
+import { UserContext } from "@/contexts/UserContext";
+import { useRouter } from "next/navigation";
+import axios from "axios";
 
 const Profile = () => {
+  const formRef = useRef(null);
+  const { user, setUser } = useContext(UserContext);
+  const router = useRouter();
+
+  const [gender, setGender] = useState("");
+
   const onChange = (checkedValues) => {
-    console.log("checked = ", checkedValues);
+    setGender(checkedValues.target.value);
   };
-  const [value, setValue] = useState('+971');
+  const [value, setValue] = useState("+971");
   const genderOptions = ["Male", "Female"];
   function CustomIcon() {
     return (
@@ -30,6 +47,19 @@ const Profile = () => {
       </svg>
     );
   }
+
+  const handleClick = () => {
+    formRef.current.submit();
+  };
+
+  const onFinish = async ({ name, mobile, country_id, city_id }) => {
+    const email = user.email;
+    const password = user.password;
+    setUser({name,mobile,country_id,city_id,gender,email,password});
+    router.push('/interest')
+
+  
+  };
   return (
     <>
       <div className="flex min-h-screen flex-col  gap-[24px] p-[16px] bg-[#F8F8F8]">
@@ -55,12 +85,13 @@ const Profile = () => {
             </div>
           </div>
           <Form
+            ref={formRef}
             name="normal_login"
             className="login-form"
             initialValues={{
               remember: true,
             }}
-            // onFinish={onFinish}
+            onFinish={onFinish}
           >
             <Form.Item
               name="name"
@@ -89,12 +120,13 @@ const Profile = () => {
             </Form.Item>
             <Form.Item
               name="email"
-              rules={[
-                {
-                  required: true,
-                  message: "Please input your Username!",
-                },
-              ]}
+              // value={user.email}
+              // rules={[
+              //   {
+              //     required: true,
+              //     message: "Please input your Username!",
+              //   },
+              // ]}
             >
               <div className="flex flex-col gap-[10px]">
                 <label
@@ -109,12 +141,14 @@ const Profile = () => {
                 <Input
                   placeholder="Type Your Email"
                   className="bg-[#FFFFFF] rounded-[8px] h-[48px] py-[14px] px-[16px] border-[#fff]"
+                  disabled={true}
+                  value={user.email}
                 />
               </div>
             </Form.Item>
 
             <Form.Item
-              name="phone"
+              name="mobile"
               rules={[
                 {
                   required: true,
@@ -136,12 +170,13 @@ const Profile = () => {
                   placeholder="Type Your Email"
                   className="bg-[#FFFFFF] rounded-[8px] h-[48px] py-[14px] px-[16px] border-[#fff]"
                 /> */}
-                  <PhoneInput
-                   className="bg-[#FFFFFF] rounded-[8px] h-[48px] py-[14px] px-[16px] border-[#fff] flex items-center"
-                   flags={flags}
-                   defaultCountry="AE"
-      value={value}
-      onChange={setValue}/>
+                <PhoneInput
+                  className="bg-[#FFFFFF] rounded-[8px] h-[48px] py-[14px] px-[16px] border-[#fff] flex items-center"
+                  flags={flags}
+                  defaultCountry="AE"
+                  value={value}
+                  onChange={setValue}
+                />
               </div>
             </Form.Item>
 
@@ -150,7 +185,7 @@ const Profile = () => {
                 Location <span>*</span>
               </label>
               <div className="flex gap-[8px]">
-                <Form.Item className="w-full">
+                <Form.Item className="w-full" name="country_id">
                   <Select
                     defaultValue="Country"
                     suffixIcon={<CustomIcon />}
@@ -166,11 +201,11 @@ const Profile = () => {
                       alignItems: "center",
                     }}
                   >
-                    <Select.Option value="demo">Demo</Select.Option>
+                    <Select.Option value="2">Demo</Select.Option>
                   </Select>
                 </Form.Item>
 
-                <Form.Item className="w-full">
+                <Form.Item className="w-full" name="city_id">
                   <Select
                     defaultValue="City"
                     suffixIcon={<CustomIcon />}
@@ -186,7 +221,7 @@ const Profile = () => {
                       alignItems: "center",
                     }}
                   >
-                    <Select.Option value="demo">Demo</Select.Option>
+                    <Select.Option value="5">Demo</Select.Option>
                   </Select>
                 </Form.Item>
               </div>
@@ -205,7 +240,10 @@ const Profile = () => {
         </div>
       </div>
       <div className="bg-[#fff] rounded-tr-[8px] h-[87px] flex justify-center items-center p-[10px] drop-shadow-[0px_0px_16px_rgba(235,235,235,1)]">
-        <Button className="bg-[#669640] text-[#fff] font-[900] text-[16px] uppercase rounded-[8px] w-full px-[16px] py-[14px] h-[48px] flex justify-center items-center">
+        <Button
+          className="bg-[#669640] text-[#fff] font-[900] text-[16px] uppercase rounded-[8px] w-full px-[16px] py-[14px] h-[48px] flex justify-center items-center"
+          onClick={handleClick}
+        >
           continue
         </Button>
       </div>
