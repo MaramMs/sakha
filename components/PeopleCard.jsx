@@ -1,18 +1,19 @@
 import Image from "next/image";
 import React from "react";
 
-const PeopleCard = () => {
+const PeopleCard = ({prayer}) => {
   return (
     <div className=" p-[8px] h-[246px] bg-[#fff]">
       <div className="flex flex-col gap-[8px] h-[214px] w-[303px]">
-        <div className="flex gap-[4px] items-center ">
+        <div className="flex gap-[5px] items-center " style={{gap:'5px'}}>
           <div className="w-[53px] h-[53px] rounded-full ">
-            <Image src="/images/person.png" width={53} height={53} />
+            <Image src={prayer.user.avatar} width={53} height={53} className="w-[53px] h-[53px] rounded-[100px]" style={{width:'53px' , height:'53px' , borderRadius:'100px'}}/>
           </div>
           <div className="flex gap-[6px] flex-col">
-            <h2 className="text-[#000] font-[500] text-[18px]">Sara Mo</h2>
+            <h2 className="text-[#000] font-[500] text-[18px]">{prayer.pray}</h2>
             <span className="text-[#949494] font-[300] text-[12px]">
-              12 hours ago
+
+              {prayer.from_time}
             </span>
           </div>
         </div>

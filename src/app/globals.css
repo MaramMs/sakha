@@ -76,7 +76,7 @@
 .swiper-pagination {
   position: absolute !important;
   left: 13px !important;
-  bottom: 32px !important;
+  bottom: 4px !important;
   text-align: left !important;
 }
 .swiper-pagination-bullet {
@@ -123,4 +123,12 @@
   height: 36px;
   padding: 8px 16px;
   border-radius: 20px;
+}
+
+.impact-card{
+  bottom: 10px;
+  gap: 2px;
+  right: 6px;
+  align-items: center;
+  left: 6px;
 }

@@ -1,15 +1,32 @@
 import { ProjectByCategoryIdContext } from "@/contexts/ProjectByCategoryId";
-import { Card, Empty, Progress } from "antd";
-import React, { useContext } from "react";
+import { Card, Empty, Progress, message } from "antd";
+import axios from "axios";
+import React, { useContext, useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-const CategoryCard = () => {
-  const { projectByCategoryId } = useContext(ProjectByCategoryIdContext);
-  console.log(projectByCategoryId, "id project");
+const CommingCard = () => {
+
+  const [commingProjects ,setCommingProjects] = useState([]);
+
+  useEffect(() =>{
+ const getAllProjects = async() =>{
+  try {
+    const res = await axios.get('https://sakha.danatportal.com/api/getAllProjects');
+    setCommingProjects(res.data.data.data) ; 
+  } catch (error) {
+    if (error.response && error.response.data) {
+      message.error(error.response.data.message_en);
+    } else {
+      message.error(error.message);
+    }
+  }
+};
+getAllProjects()
+  },[]);
   return (
     <>
       {
-      projectByCategoryId.length === 0 ? (
+      commingProjects.length === 0 ? (
         <Empty />
       ) : (
         <Swiper
@@ -35,7 +52,7 @@ const CategoryCard = () => {
       // modules={[Pagination]}
       className="mySwiper swiper-card"
     >
-      {projectByCategoryId.map((item) => {
+      {commingProjects.map((item) => {
         return (
 
           
@@ -43,7 +60,7 @@ const CategoryCard = () => {
             <Card
               style={{
                 width: 245,
-                height:320,
+                height:300,
                 backgroundColor: "#fff",
                 borderRadius: "8px",
                 display: "flex",
@@ -51,7 +68,7 @@ const CategoryCard = () => {
                 gap: "8px",
                 padding: "0px 0px 8px 0px",
               }}
-              cover={<img alt="example" src={item.main_image} style={{height:'140px'}}/>}
+              cover={<img alt="example" src={item.main_image}  style={{height:'140px'}}/>}
             >
               <div className="flex gap-[16px] h-[118px] flex-col">
                 <h3 className="font-[500] text-[14px] text-[#000]">
@@ -105,4 +122,4 @@ const CategoryCard = () => {
   );
 };
 
-export default CategoryCard;
+export default CommingCard;

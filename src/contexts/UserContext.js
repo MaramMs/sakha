@@ -12,10 +12,14 @@ export function UserProvider({ children }) {
     gender: "",
     country_id: "",
     city_id: "",
+    otp:'',
+    photo:''
+  
   });
-  const [userInfo ,setUserInfo] = useState({})
+  const [userInfo ,setUserInfo] = useState({});
+  const [interestCategories , setInterestCategories] = useState([])
   return (
-    <UserContext.Provider value={{ user, setUser,setUserInfo ,userInfo}}>
+    <UserContext.Provider value={{ user, setUser,setUserInfo ,userInfo,setInterestCategories,interestCategories}}>
       {children}
     </UserContext.Provider>
   );
