@@ -8,7 +8,8 @@ import { useRouter } from "next/navigation";
 import React, { useContext, useState } from "react";
 
 const Register = () => {
-  const {user,setUser} = useContext(UserContext)
+  const {user,setUser} = useContext(UserContext);
+  const {setUserInfo} = useContext(UserContext)
   
   const router = useRouter();
   const onFinish = async ({ email, password }) => {
@@ -21,8 +22,22 @@ const Register = () => {
         }
       );
       setUser({email,password});
+
+      if(res.status === 200) {
+        const resCode = await axios.post(
+          "https://sakha.danatportal.com/api/users/sendOTP",
+          {
+            email,
+           
+          }
+        );
+        setUser(prevState => ({ ...prevState, otp: resCode.data.data }));
+        console.log(user, 'user data');
+        console.log(resCode.data.data,'resCode.data.data');
+        console.log(user.otp , 'otp user');
+        router.push('/verifyEmail')
+      }
       message.success(res.data.message_en);
-      router.push("/verifyEmail");
     } catch (error) {
       message.error(res.data.error);
     }

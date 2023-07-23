@@ -48,6 +48,27 @@ const Profile = () => {
     );
   }
 
+ 
+const handleFileChange = async (event) => {
+  const file = event.target.files[0];
+  if (file) {
+    // Read the file data
+    const formData = new FormData();
+    const image = formData.append('file', file);
+
+    setUser(prevState => ({ ...prevState, photo: image}));
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      // Store the file data in the user context
+      setUser(prevState => ({ ...prevState, photo: reader.result }));
+    };
+    reader.readAsDataURL(file);
+  }
+}
+
+
+console.log(user.photo , 'user photo');
   const handleClick = () => {
     formRef.current.submit();
   };
@@ -55,7 +76,8 @@ const Profile = () => {
   const onFinish = async ({ name, mobile, country_id, city_id }) => {
     const email = user.email;
     const password = user.password;
-    setUser({name,mobile,country_id,city_id,gender,email,password});
+    const photo= user.photo;
+    setUser({name,mobile,country_id,city_id,gender,email,password,photo});
     router.push('/interest')
 
   
@@ -78,11 +100,32 @@ const Profile = () => {
                 borderRadius: "8px",
               }}
             >
-              <Image src="/images/user.svg" width={45} height={45} />
+
+
+             {
+              user.photo ?  <Image src={user.photo} width={45} height={45} /> : <Image src="/images/user.svg" width={45} height={45} />
+             }
+              
             </Avatar>
-            <div className="bg-[#4D4D4D] w-[32px] h-[32px] rounded-full flex justify-center items-center absolute top-[30px] right-[130px]">
+            {/* <div className="bg-[#4D4D4D] w-[32px] h-[32px] rounded-full flex justify-center items-center absolute top-[30px] right-[130px]">
               <Image src="/images/camera.svg" width={16.67} height={15} />
-            </div>
+              <input
+      type="file"
+      accept="image/*"
+      onChange={handleFileChange}
+      style={{ display: 'none' }}
+    />
+            </div> */}
+
+<label className="bg-[#4D4D4D] w-[32px] h-[32px] rounded-full flex justify-center items-center absolute top-[30px] right-[130px]">
+    <Image src="/images/camera.svg" width={16.67} height={15} />
+    <input
+      type="file"
+      accept="image/*"
+      onChange={handleFileChange}
+      style={{ display: 'none' }}
+    />
+  </label>
           </div>
           <Form
             ref={formRef}

@@ -1,5 +1,6 @@
 'use client'
 import { UserContext } from '@/contexts/UserContext'
+import Image from 'next/image';
 import React, { useContext } from 'react'
 
 const myProfile = () => {
@@ -8,6 +9,8 @@ const myProfile = () => {
   return (
     <div>
       my profile
+
+      <Image src={userInfo.profile_photo_url} width={100} height={100}/>
     </div>
   )
 }

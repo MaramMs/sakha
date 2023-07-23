@@ -1,28 +1,35 @@
 "use client";
-import { Button } from "antd";
+import { Button, message } from "antd";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Header from "../../../components/Header";
 import CustomOtpInput from "../../../components/CustomOtpInput";
+import { UserContext } from "@/contexts/UserContext";
 import { useRouter } from "next/navigation";
 
 const VerifyEmail = () => {
   const [otp, setOtp] = useState([]);
-  const router = useRouter()
-  console.log(otp,'otp');
+  const { user } = useContext(UserContext);
+  console.log(user.otp , 'user otp code from verify');
+  const router = useRouter();
+  console.log(otp, "otp");
 
   const handleChange = (otp) => {
-      setOtp(otp);
-    };
+    setOtp(otp);
+  };
   const [timeSendCode, setTimeSendCode] = useState(59);
   const [timerActive, setTimerActive] = useState(true);
 
   const handleSendNewCodeClick = () => {
     setTimerActive(true);
   };
-const handleVerifyCode =() =>{
-  router.push('/profile')
-}
+  const handleVerifyCode = () => {
+    
+      if (otp === user.otp) {
+        router.push("/profile");
+      }
+    }
+  
   useEffect(() => {
     if (timerActive) {
       const timer = setInterval(() => {
@@ -35,7 +42,7 @@ const handleVerifyCode =() =>{
       }, 1000);
       return () => clearInterval(timer);
     }
-  }, [timerActive]);
+  }, [timerActive,otp]);
 
   let sendNewCodeClass = "text-[#828282]";
   if (!timerActive) {
@@ -59,7 +66,7 @@ const handleVerifyCode =() =>{
         </div>
 
         <div className="flex flex-col gap-[16px]">
-          <CustomOtpInput otp={otp} handleChange={handleChange}/>
+          <CustomOtpInput otp={otp} handleChange={handleChange} />
           <div className="flex flex-col text-[12px] font-[900] text-center">
             <span className="text-[#000000]">{`00:${timeSendCode} sec`}</span>
             <span className={sendNewCodeClass} onClick={handleSendNewCodeClick}>
@@ -67,7 +74,10 @@ const handleVerifyCode =() =>{
             </span>
           </div>
           <div className="flex flex-col gap-[8px]">
-            <Button className="text-[#fff] bg-[#669640] text-[900] text-[16px] rounded-[8px] px-[16px] py-[14px] flex justify-center items-center h-[48px]" onClick={handleVerifyCode}>
+            <Button
+              className="text-[#fff] bg-[#669640] text-[900] text-[16px] rounded-[8px] px-[16px] py-[14px] flex justify-center items-center h-[48px]"
+              onClick={handleVerifyCode}
+            >
               Verify
             </Button>
 
