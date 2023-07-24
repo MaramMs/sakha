@@ -8,6 +8,7 @@ import { Button, Progress } from "antd";
 import Image from "next/image";
 import HomeUrgentNav from "../../../components/HomeUrgentNav";
 import PrayersCard from "../../../components/PrayersCard";
+import Link from "next/link";
 
 const CaseDetails = () => {
   useEffect(() => {}, []);
@@ -261,12 +262,14 @@ const CaseDetails = () => {
         </div>
 
         <div className="bg-[#fff] rounded-tr-[8px] h-[87px] flex justify-center items-center p-[10px] drop-shadow-[0px_0px_16px_rgba(235,235,235,1)]">
-        <Button
+    <Link href='/donate'>
+    <Button
           className="bg-[#669640] text-[#fff] font-[900] text-[16px] uppercase rounded-[8px] w-full px-[16px] py-[14px] h-[48px] flex justify-center items-center"
-          // onClick={HandleRegister}
+         
         >
        DONATE NOW!
         </Button>
+    </Link>
       </div>
       </div>
     </div>

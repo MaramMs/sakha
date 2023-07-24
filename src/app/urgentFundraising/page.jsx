@@ -6,6 +6,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import CategoryCard from "../../../components/CategoryCard";
 import { Button, Empty } from "antd";
 import { ProjectByCategoryIdContext } from "@/contexts/ProjectByCategoryId";
+import Link from "next/link";
 
 const UrgentFundraising = () => {
   const { projectByCategoryId } = useContext(ProjectByCategoryIdContext);
@@ -21,7 +22,9 @@ const UrgentFundraising = () => {
   projectByCategoryId.length !=0 ? 
   (
     projectByCategoryId.map((item) => {
-      return <CategoryCard item={item} type="urgent" />;
+      return <Link href='/caseDetails'>
+      <CategoryCard item={item} type="urgent" />
+      </Link>;
     })
   )
   : (<Empty />)
