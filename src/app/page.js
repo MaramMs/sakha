@@ -1,5 +1,5 @@
 "use client";
-import { Button, message } from "antd";
+import { Button, Card, Progress, message } from "antd";
 import Image from "next/image";
 import TopUp from "../../components/TopUp";
 
@@ -12,11 +12,12 @@ import Categories from "../../components/Categories";
 import CategoryCard from "../../components/CategoryCard";
 import PeopleCard from "../../components/PeopleCard";
 import NavBar from "../../components/NavBar";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import CommingCard from "../../components/CommingCard";
 import ImpactsProjects from "../../components/impactsProjects";
 import PrayersCard from "../../components/PrayersCard";
+import { ProjectByCategoryIdContext } from "@/contexts/ProjectByCategoryId";
 
 const items = [
   {
@@ -35,6 +36,7 @@ const items = [
 
 export default function Home() {
   const [data, setData] = useState([]);
+  const { projectByCategoryId } = useContext(ProjectByCategoryIdContext);
 
   useEffect(() => {
     const getSliderHome = async () => {
@@ -43,8 +45,8 @@ export default function Home() {
           "https://sakha.danatportal.com/api/sliders"
         );
 
-setData(res.data.data)        
-message.success(res.data.message_en);
+        setData(res.data.data);
+        message.success(res.data.message_en);
       } catch (error) {
         if (error.response && error.response.data) {
           message.error(error.response.data.message_en);
@@ -188,87 +190,72 @@ message.success(res.data.message_en);
                 <p className="absolute left-[13px] top-[137px] text-[#fff] font-[500] text-[18px] w-[303px]">
                   {item.title}
                 </p>
-                <img src={item.main_image} alt={item.title} style={{width:'100%' , height:'250px' ,objectFit:'cover'}}/>
+                <img
+                  src={item.main_image}
+                  alt={item.title}
+                  style={{ width: "100%", height: "250px", objectFit: "cover" }}
+                />
               </SwiperSlide>
             ))}
           </Swiper>
         </div>
 
         <div className="flex flex-col gap-[8px]">
-          <HomeUrgentNav title="Urgent Fundraising" />
+          <HomeUrgentNav title="Urgent Fundraising" url="/urgentFundraising"/>
           <div className="flex flex-col gap-[16px] ">
-         <Categories />
-           
-              <Swiper
-                slidesPerView={1.5}
-                // slidesPerView={'auto'}
-                // centeredSlides={true}
-                spaceBetween={30}
-                pagination={{
-                  clickable: true,
-                }}
-                breakpoints={{
-                  640: {
-                    slidesPerView: 2,
-                    spaceBetween: 5,
-                  },
-                  768: {
-                    slidesPerView: 4,
-                    spaceBetween: 40,
-                  },
-                  1024: {
-                    slidesPerView: 5,
-                    spaceBetween: 50,
-                  },
-                }}
-                // modules={[Pagination]}
-                className="mySwiper swiper-card"
-              >
-            
-                <SwiperSlide>
-                  <CategoryCard />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <CategoryCard />
-                </SwiperSlide>
+            <Categories />
 
-                <SwiperSlide>
-                  <CategoryCard />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <CategoryCard />
-                </SwiperSlide>
+            <Swiper
+              slidesPerView={1.5}
+              spaceBetween={30}
+              pagination={{
+                clickable: true,
+              }}
+              breakpoints={{
+                640: {
+                  slidesPerView: 2,
+                  spaceBetween: 5,
+                },
+                768: {
+                  slidesPerView: 4,
+                  spaceBetween: 40,
+                },
+                1024: {
+                  slidesPerView: 5,
+                  spaceBetween: 50,
+                },
+              }}
+              className="mySwiper swiper-card"
+            >
+              {projectByCategoryId.map((item) => {
+                return (
+                  <SwiperSlide key={item.id}>
+                    <CategoryCard item={item} type='home' />
+                  </SwiperSlide>
+                );
+              })}
 
-                <SwiperSlide>
-                  <CategoryCard />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <CategoryCard />
-                </SwiperSlide>
-              </Swiper>
-            
+
+            </Swiper>
           </div>
         </div>
 
         <div className="flex flex-col gap-[8px]">
           <HomeUrgentNav title="Coming to an end" />
-            <CommingCard />
-
+          <CommingCard />
         </div>
 
         <div className="flex flex-col gap-[8px]">
           <HomeUrgentNav title="Impact of Your Donation" />
           <ImpactsProjects />
-      
         </div>
 
         <div className="flex flex-col gap-[8px]">
           <HomeUrgentNav title="Prayers from good people" />
           <PrayersCard />
           <Button className="bg-[#EFF4EB] px-[16px] py-[14px] flex justify-center items-center h-[48px] text-[#669640] font-[500] text-[16px] leading-[24.8px] rounded-[8px] border-none">
-              Pray for Them!
-            </Button>
-          
+            Pray for Them!
+          </Button>
         </div>
       </div>
 
