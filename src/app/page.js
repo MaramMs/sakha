@@ -15,7 +15,7 @@ import NavBar from "../../components/NavBar";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import CommingCard from "../../components/CommingCard";
-import ImpactsProjects from "../../components/impactsProjects";
+import ImpactsProjects from "../../components/ImpactsProjects";
 import PrayersCard from "../../components/PrayersCard";
 import { ProjectByCategoryIdContext } from "@/contexts/ProjectByCategoryId";
 
