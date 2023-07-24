@@ -20,7 +20,8 @@ const Donate = () => {
     </div>
 
     <div className='flex flex-col gap-y-[16px]'>
-  <div className='flex justify-between flex-wrap gap-[5.5px]'>
+<div className="flex flex-col gap-y-[5.5px]">
+<div className='flex justify-between gap-[5.5px]'>
     <div className='bg-[#E7EFF4] h-[40px] w-[108px] px-[24px] py-[5px] rounded-[8px] flex justify-center items-center'>
         1$
     </div>
@@ -30,25 +31,34 @@ const Donate = () => {
     <div className='bg-[#E7EFF4] h-[40px] w-[108px] px-[24px] py-[5px] rounded-[8px] flex justify-center items-center'>
         20$
     </div>
-    <div className='bg-[#E7EFF4] h-[40px] w-[108px] px-[24px] py-[5px] rounded-[8px] flex justify-center items-center'>
-        1$
-    </div>
-    <div className='bg-[#E7EFF4] h-[40px] w-[108px] px-[24px] py-[5px] rounded-[8px] flex justify-center items-center'>
-        10$
-    </div>
-    <div className='bg-[#E7EFF4] h-[40px] w-[108px] px-[24px] py-[5px] rounded-[8px] flex justify-center items-center'>
-        20$
-    </div>
-    <div className='bg-[#E7EFF4] h-[40px] w-[108px] px-[24px] py-[5px] rounded-[8px] flex justify-center items-center'>
-        1$
-    </div>
-    <div className='bg-[#E7EFF4] h-[40px] w-[108px] px-[24px] py-[5px] rounded-[8px] flex justify-center items-center'>
-        10$
-    </div>
-    <div className='bg-[#E7EFF4] h-[40px] w-[108px] px-[24px] py-[5px] rounded-[8px] flex justify-center items-center'>
-        20$
-    </div>
+  
   </div>
+
+  <div className='flex justify-between gap-[5.5px]'>
+    <div className='bg-[#E7EFF4] h-[40px] w-[108px] px-[24px] py-[5px] rounded-[8px] flex justify-center items-center'>
+        1$
+    </div>
+    <div className='bg-[#E7EFF4] h-[40px] w-[108px] px-[24px] py-[5px] rounded-[8px] flex justify-center items-center'>
+        10$
+    </div>
+    <div className='bg-[#E7EFF4] h-[40px] w-[108px] px-[24px] py-[5px] rounded-[8px] flex justify-center items-center'>
+        20$
+    </div>
+  
+  </div>
+  <div className='flex justify-between gap-[5.5px]'>
+    <div className='bg-[#E7EFF4] h-[40px] w-[108px] px-[24px] py-[5px] rounded-[8px] flex justify-center items-center'>
+        1$
+    </div>
+    <div className='bg-[#E7EFF4] h-[40px] w-[108px] px-[24px] py-[5px] rounded-[8px] flex justify-center items-center'>
+        10$
+    </div>
+    <div className='bg-[#E7EFF4] h-[40px] w-[108px] px-[24px] py-[5px] rounded-[8px] flex justify-center items-center'>
+        20$
+    </div>
+  
+  </div>
+</div>
 
   <div className='flex gap-[8px] items-center'>
     <Checkbox className='bg-[#DBDBDB] rounded-[8px] w-[26px] h-[26px]'/>

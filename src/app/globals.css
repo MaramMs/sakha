@@ -143,3 +143,6 @@
   transition-timing-function: var(--swiper-wrapper-transition-timing-function, initial);
   box-sizing: content-box;
 }
+:where(.css-14wwjjs).ant-checkbox .ant-checkbox-inner{
+  background-color: transparent;
+}
