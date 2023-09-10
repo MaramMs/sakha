@@ -4,25 +4,26 @@ import React, { useEffect, useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import PeopleCard from './PeopleCard';
 
-const PrayersCard = () => {
-    const [prayers , setPrayer] = useState([]);
+const PrayersCard = ({prayers}) => {
+  // console.log(pray , 'paray');
+    // const [prayers , setPrayer] = useState([]);
 
-    useEffect(() =>{
-        const getPrayers = async() =>{
-         try {
-           const res = await axios.get('https://sakha.danatportal.com/api/lastPrays');
-           console.log(res.data.data);
-           setPrayer(res.data.data) ; 
-         } catch (error) {
-           if (error.response && error.response.data) {
-             message.error(error.response.data.message_en);
-           } else {
-             message.error(error.message);
-           }
-         }
-       };
-       getPrayers()
-         },[]);
+    // useEffect(() =>{
+    //     const getPrayers = async() =>{
+    //      try {
+    //        const res = await axios.get('https://sakha.danatportal.com/api/lastPrays');
+    //        console.log(res.data.data);
+    //        setPrayer(res.data.data) ; 
+    //      } catch (error) {
+    //        if (error.response && error.response.data) {
+    //          message.error(error.response.data.message_en);
+    //        } else {
+    //          message.error(error.message);
+    //        }
+    //      }
+    //    };
+    //    getPrayers()
+    //      },[]);
   return (
 
 
@@ -44,7 +45,7 @@ const PrayersCard = () => {
             >
 
           {
-            prayers.map((prayer, index) => {
+            prayers?.map((prayer, index) => {
                 return (
                     <SwiperSlide key={index}>
               

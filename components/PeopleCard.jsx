@@ -20,12 +20,9 @@ const PeopleCard = ({prayer}) => {
 
         <div className="flex flex-col gap-[16px]">
           <p className="text-[#000] font-[300] text-[12px] leading-[18.5px]">
-            Lord, we ask that you bless the healthcare providers attending to
-            these children with wisdom, skill, and compassion. May their efforts
-            be guided by your divine guidance, leading them to make the best
-            decisions for the well-being of these young lives
+    {prayer.pray}
           </p>
-          <div className="flex gap-[24px] items-center">
+          {/* <div className="flex gap-[24px] items-center">
             <div className="flex gap-[8px] items-center">
             <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
 <rect width="34" height="34" rx="8" fill="#F9F9F9"/>
@@ -51,7 +48,7 @@ const PeopleCard = ({prayer}) => {
 
             </div>
 
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
