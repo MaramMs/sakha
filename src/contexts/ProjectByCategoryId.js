@@ -21,7 +21,7 @@ export function ProjectByCategoryIdProvider({ children }) {
       console.log('data');
       console.log(res.data.data , ' res from details project context ');
       setProjectData(res.data.data);
-      router.push(`/caseDetails?id=${id}`); // Pass 'id' as a query parameter
+      router.push(`/casedetails?id=${id}`); // Pass 'id' as a query parameter
     } catch (error) {
       
     }
