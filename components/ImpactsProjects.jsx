@@ -25,6 +25,7 @@ const ImpactsProjects = () => {
     getlastImpacts();
   }, []);
 
+  console.log(lastImpacts,'lastImpacts');
   return (
     <>
       <Swiper
@@ -50,7 +51,7 @@ const ImpactsProjects = () => {
         // modules={[Pagination]}
         className="mySwiper swiper-card"
       >
-        {lastImpacts.map((item) => {
+        {lastImpacts.data?.map((item) => {
           return (
             <SwiperSlide>
               <div
