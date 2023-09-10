@@ -19,24 +19,43 @@ import ImpactsProjects from "../../components/ImpactsProjects";
 import PrayersCard from "../../components/PrayersCard";
 import { ProjectByCategoryIdContext } from "@/contexts/ProjectByCategoryId";
 
-const items = [
-  {
-    text: "Humanitarian Assistance – Development Aid Africa",
-    image: "/images/top-up.png",
-  },
-  {
-    text: "Humanitarian Assistance – Development Aid Africa",
-    image: "/images/top-up.png",
-  },
-  {
-    text: "Humanitarian Assistance – Development Aid Africa",
-    image: "/images/top-up.png",
-  },
-];
+// const items = [
+//   {
+//     text: "Humanitarian Assistance – Development Aid Africa",
+//     image: "/images/top-up.png",
+//   },
+//   {
+//     text: "Humanitarian Assistance – Development Aid Africa",
+//     image: "/images/top-up.png",
+//   },
+//   {
+//     text: "Humanitarian Assistance – Development Aid Africa",
+//     image: "/images/top-up.png",
+//   },
+// ];
 
 export default function Home() {
   const [data, setData] = useState([]);
   const { projectByCategoryId } = useContext(ProjectByCategoryIdContext);
+  
+const [urgentProjects , setUrgentProjects] = useState([])
+useEffect(() => {
+  const getUrgentProjects = async () => {
+    try {
+      const res = await axios.get('https://sakha.danatportal.com/api/projects/1');
+      console.log(res , 'res form project');
+      setUrgentProjects(res.data.data);
+     ;
+    } catch (error) {
+      // Handle the error here, for example, you can log it or set an error state.
+      console.error('Error fetching urgent projects:', error);
+    }
+  };
+
+  getUrgentProjects();
+}, []);
+
+console.log(urgentProjects , 'urgentProjects');
 
   useEffect(() => {
     const getSliderHome = async () => {
@@ -227,7 +246,8 @@ export default function Home() {
               }}
               className="mySwiper swiper-card"
             >
-              {projectByCategoryId.map((item) => {
+              {urgentProjects.map((item) => {
+                console.log(item , 'item urgent');
                 return (
                   <SwiperSlide key={item.id}>
                     <CategoryCard item={item} type='home' />

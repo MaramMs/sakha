@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -9,10 +9,20 @@ import Image from "next/image";
 import HomeUrgentNav from "../../../components/HomeUrgentNav";
 import PrayersCard from "../../../components/PrayersCard";
 import Link from "next/link";
+import { ProjectByCategoryIdContext } from "@/contexts/ProjectByCategoryId";
+import { useSearchParams } from "next/navigation";
 
 const CaseDetails = () => {
-  useEffect(() => {}, []);
+  const searchParams = useSearchParams()
+ 
+  const id = searchParams.get('id');
+  const {projectData, getDetailsProject  } = useContext(ProjectByCategoryIdContext);
+  console.log(projectData,'projectData');
 
+useEffect(()=>{
+  getDetailsProject(id)
+},[id])
+  
   return (
     <div className="bg-[#F8F8F8] min-h-screen">
       <div className="caseDetails">
@@ -36,21 +46,21 @@ const CaseDetails = () => {
         <div className="p-[16px] flex flex-col gap-[16px]">
           <div className="flex gap-[16px] flex-col">
             <h3 className="font-[900] text-[18px] text-[#000]">
-              {/* {item.title} */}
-              Help Orphanage Children to thrive, heal, and build a brighter
-              future filled with love.
+              {projectData.title}
+              {/* Help Orphanage Children to thrive, heal, and build a brighter
+              future filled with love. */}
             </h3>
             <div className="flex flex-col gap-[8px]">
               <p className="text-[14px] font-[500] text-[#4D4D4D]">
                 {" "}
                 <span className="font-[900] text-[#669640]">
-                  {/* {item.raised} */}
-                  555
+                  {projectData.raised}
+                  {/* 555 */}
                 </span>{" "}
-                fund raised from{" "}
+                {/* fund raised from{" "} */}
                 <span className="font-[900] text-[#669640]">
-                  {/* {item.total_price} */}
-                  888
+                  {projectData.total_price}
+                  {/* 888 */}
                 </span>
               </p>
               <Progress percent={50} showInfo={false} />
@@ -58,8 +68,8 @@ const CaseDetails = () => {
               <div className="flex justify-between">
                 <div className="flex gap-[8px] items-center">
                   <span className="font-[900] text-[#669640] text-[14px]">
-                    {/* {item.donations_count} */}
-                    789
+                    {projectData.donations_count}
+                    {/* 789 */}
                   </span>
                   <span className="text-[14px] font-[500] text-[#4D4D4D]">
                     Donators
@@ -68,8 +78,8 @@ const CaseDetails = () => {
 
                 <div className="flex gap-[8px] items-center">
                   <span className="font-[900] text-[#669640] text-[14px]">
-                    {/* {item.days_left} */}
-                    555
+                    {projectData.days_left}
+                    {/* 555 */}
                   </span>
                   <span className="text-[14px] font-[500] text-[#4D4D4D]">
                     days left
@@ -245,10 +255,11 @@ const CaseDetails = () => {
           <div className="flex flex-col gap-[8px]">
             <h3 className="text-[#000] text-[18px] font-[900]">Story</h3>
             <p className="text-[#000] text-[12px] font-[300]">
-              Lord, we ask that you bless the healthcare providers attending to
+              {projectData.story}
+              {/* Lord, we ask that you bless the healthcare providers attending to
               these children with wisdom, skill, and compassion. May their
               efforts be guided by your divine guidance, leading them to make
-              the best decisions for the well-being of these young lives
+              the best decisions for the well-being of these young lives */}
             </p>
           </div>
 

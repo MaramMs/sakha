@@ -1,12 +1,30 @@
 import { ProjectByCategoryIdContext } from "@/contexts/ProjectByCategoryId";
 import { Card, Empty, Progress } from "antd";
-import React, { useContext } from "react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import React, { useContext, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 const CategoryCard = ({item,type}) => {
-  const { projectByCategoryId } = useContext(ProjectByCategoryIdContext);
+  const { projectByCategoryId,getDetailsProject} = useContext(ProjectByCategoryIdContext);
+  console.log(getDetailsProject,'getDetailsProject');
   console.log( projectByCategoryId , 'project');
   console.log(projectByCategoryId, "id project");
+const [projectData,setProjectData] = useState({});
+const router = useRouter();
+  const handleDetailsProject = async (id) =>{
+    console.log('clicked');
+    
+    // try {
+    //   const res = await axios.get(`https://sakha.danatportal.com/api/project/${id}`);
+    //   console.log(res.data.data , ' res from project ');
+    //   setProjectData(res.data.data);
+    //   router.push('/caseDetails')
+    // } catch (error) {
+      
+    // }
+    getDetailsProject(id)
+  }
   return (
     <>
       {/* {
@@ -102,7 +120,7 @@ const CategoryCard = ({item,type}) => {
     } */}
 
     {
-      projectByCategoryId.length !==0 ? (
+      item.length !==0 ? (
 <Card
               style={{
                 width:  `{type === 'home' ? '255' : '100%'}`,
@@ -113,9 +131,10 @@ const CategoryCard = ({item,type}) => {
                 flexDirection: "column",
                 gap: "8px",
                 padding: "0px 0px 8px 0px",
-                position:'relative'
+                position:'relative',
+                cursor:'pointer'
               }}
-          
+          onClick={()=>handleDetailsProject(item.id)}
               cover={<img alt="example" src={item.main_image}     style={{height:type === 'home' ? '140px' : '100%'}}/>}
             >
               <div className="w-[34px] h-[34px] absolute top-[8px] right-[8px] bg-[#fff] flex justify-center items-center rounded-[8px]" style={{width:'34px' , height:'34px',position:'absolute',top:'8px' ,right:'8px'}}>
