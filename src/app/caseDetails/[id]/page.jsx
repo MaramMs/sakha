@@ -1,43 +1,47 @@
 "use client";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
 import { Button, Progress } from "antd";
 import Image from "next/image";
-import HomeUrgentNav from "../../../components/HomeUrgentNav";
-import PrayersCard from "../../../components/PrayersCard";
 import Link from "next/link";
 import { ProjectByCategoryIdContext } from "@/contexts/ProjectByCategoryId";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import HomeUrgentNav from "../../../../components/HomeUrgentNav";
+import PrayersCard from "../../../../components/PrayersCard";
+import axios from "axios";
+// import { useRouter } from "next/router";
 
-const CaseDetails = () => {
-  const searchParams = useSearchParams();
-  
-  
-  const id = searchParams.get('id');
+const CaseDetails = ({params}) => {
+  console.log(params.id , 'patames');
+  const id = params.id;
+  // const searchParams = useSearchParams();
+  // const router = useRouter();
+  // const id = searchParams.get('id');
   // const {projectData, getDetailsProject  } = useContext(ProjectByCategoryIdContext);
-  console.log(projectData,'projectData');
+  const [projectData,setProjectData] = useState({});
+
   const percentageRaised = ((projectData.raised / projectData.total_price) * 100).toFixed(2);
 
-  const [projectData, setProjectData] = useState({});
 
-  useEffect(() => {
-    const getDetailsProject = async () => {
-      try {
-        const res = await axios.get(
-          "https://sakha.danatportal.com/api/project/10"
-        );
-        console.log("data");
-        console.log(res.data.data, "res from id page");
-        setProjectData(res.data.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    getDetailsProject();
-  }, []);
+useEffect(()=>{
+  const getDetailsProject = async () =>{
+    console.log('maram');
+    try {
+      const res = await axios.get(`https://sakha.danatportal.com/api/project/${id}`);
+      console.log('data');
+      console.log(res.data.data , ' res from details project context ');
+      setProjectData(res.data.data);
+      // router.push(`/casedetails?id=${id}`); // Pass 'id' as a query parameter
+    } catch (error) {
+      console.log(error,'error');
+    }
+  }
+  getDetailsProject()
+},[])
+
   return (
     <div className="bg-[#F8F8F8] min-h-screen">
       <div className="caseDetails">
@@ -385,3 +389,17 @@ projectData?.single_doners_count != 0 && (
 };
 
 export default CaseDetails;
+export async function generateStaticParams() {
+  console.log(context , 'context');
+  try {
+    const res = await axios.get('https://sakha.danatportal.com/api/project/10');
+    console.log('data');
+    console.log(res.data.data , ' res from details project context ');
+    setProjectData(res.data.data);
+  } catch (error) {
+    
+  } 
+  return posts.map((post) => ({
+    slug: post.slug,
+  }))
+}

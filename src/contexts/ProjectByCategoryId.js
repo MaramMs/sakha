@@ -17,11 +17,11 @@ export function ProjectByCategoryIdProvider({ children }) {
   const getDetailsProject = async (id) =>{
     console.log('dTA OUT');
     try {
-      const res = await axios.get(`https://sakha.danatportal.com/api/project/${id}`);
+      const res = await axios.get('https://sakha.danatportal.com/api/project/10');
       console.log('data');
       console.log(res.data.data , ' res from details project context ');
       setProjectData(res.data.data);
-      router.push(`/casedetails?id=${id}`); // Pass 'id' as a query parameter
+      // router.push(`/casedetails?id=${id}`); // Pass 'id' as a query parameter
     } catch (error) {
       
     }
