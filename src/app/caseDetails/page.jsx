@@ -21,7 +21,7 @@ const CaseDetails = () => {
 
 useEffect(()=>{
   getDetailsProject(id)
-},[id])
+},[])
   
   return (
     <div className="bg-[#F8F8F8] min-h-screen">
