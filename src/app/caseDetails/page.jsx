@@ -21,9 +21,9 @@ const CaseDetails = () => {
   console.log(projectData,'projectData');
   const percentageRaised = ((projectData.raised / projectData.total_price) * 100).toFixed(2);
 
-useEffect(()=>{
-  getDetailsProject(id);
-},[])
+// useEffect(()=>{
+//   getDetailsProject(id);
+// },[])
   
   return (
     <div className="bg-[#F8F8F8] min-h-screen">
