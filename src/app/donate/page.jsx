@@ -116,22 +116,22 @@ amount:'1000$'
             <div className="bg-[#fff] rounded-tr-[8px] h-[87px] flex justify-center items-center p-[10px] drop-shadow-[0px_0px_16px_rgba(235,235,235,1)]">
     <Button
           className="bg-[#669640] text-[#fff] font-[900] text-[16px] uppercase rounded-[8px] w-full px-[16px] py-[14px] h-[48px] flex justify-center items-center"
-         onClick={postPayRequest}
+         onClick={()=>setUserModal(true)}
         >
       Pay
         </Button>
       </div>
 
 
-      <Button type="primary" onClick={()=>setUserModal(true)} >
+      {/* <Button type="primary" onClick={()=>setUserModal(true)} >
         Open Modal
-      </Button>
+      </Button> */}
 
     </div>      
     </div>
     </div>
     {
-  userModal && <UserModal userModal={userModal} setUserModal={setUserModal}/>
+  userModal && <UserModal userModal={userModal} setUserModal={setUserModal} amount={amount}/>
 }
     </div>
   )

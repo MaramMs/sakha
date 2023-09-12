@@ -6,11 +6,21 @@ const UserModal = ({userModal,setUserModal}) => {
 
     const handleOk = () => {
         setLoading(true);
-        setTimeout(() => {
+        setTimeout( async() => {
+          try {
+            const res = await axios.post('https://sakha.danatportal.com/api/donations',{
+            amount: parseInt(amount),
+             project_id
+            });
+          } catch (error) {
+            console.log(error,'error');
+          }
           setLoading(false);
           setUserModal(false);
         }, 3000);
       };
+
+    
       const handleCancel = () => {
         setUserModal(false);
       };
