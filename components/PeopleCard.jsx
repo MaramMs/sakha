@@ -3,7 +3,7 @@ import React from "react";
 
 const PeopleCard = ({prayer}) => {
   return (
-    <div className=" p-[8px] h-[246px] bg-[#fff]">
+    <div className=" p-[8px] h-[246px] bg-[#fff] " style={{height:'246px'}}>
       <div className="flex flex-col gap-[8px] h-[214px] w-[303px]">
         <div className="flex gap-[5px] items-center " style={{gap:'5px'}}>
           <div className="w-[53px] h-[53px] rounded-full ">

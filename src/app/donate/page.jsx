@@ -105,7 +105,7 @@ amount:'1000$'
     }
   }
   return (
-    <div className='min-h-screen bg-[#F8F8F8]'>
+    <div className='min-h-screen bg-[#F8F8F8] md:w-[30%] md:mx-auto md:my-[20px] md:h-[750px] md:min-h-[600px] md:shadow-md md:flex md:justify-center md:items-center'>
         <div className='flex flex-col min-h-screen justify-between'>
             <div className='p-[16px] flex flex-col  gap-[48px]'>
             <HomeUrgentNav title="Donate" />
@@ -145,9 +145,9 @@ amount:'1000$'
 
     </div>
 
-    <Input name='name' value={userData.name} placeholder='Name'   style={{marginBottom:'10px',border:'none'}} onChange={(e) => handleUserDataInput(e)}/>
-       <Input name='email' value={userData.email}placeholder='Email'  style={{marginBottom:'10px',border:'none'}} onChange={(e) => handleUserDataInput(e)}/>
-       <Input name='phone' value={userData.phone} placeholder='Phone'  style={{marginBottom:'10px',border:'none'}} onChange={(e) => handleUserDataInput(e)}/>
+    <Input name='name' value={userData.name} placeholder='Name'   style={{marginBottom:'10px',border:'none',padding:'10px'}} onChange={(e) => handleUserDataInput(e)}/>
+       <Input name='email' value={userData.email}placeholder='Email'  style={{marginBottom:'10px',border:'none',padding:'10px'}} onChange={(e) => handleUserDataInput(e)}/>
+       <Input name='phone' value={userData.phone} placeholder='Phone'  style={{marginBottom:'10px',border:'none',padding:'10px'}} onChange={(e) => handleUserDataInput(e)}/>
  
 
   </div>

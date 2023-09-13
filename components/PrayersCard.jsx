@@ -39,6 +39,7 @@ const PrayersCard = ({prayers}) => {
                 640: {
                   slidesPerView: 1,
                 },
+                728:{ slidesPerView: 3,}
               }}
               // modules={[Pagination]}
               className="mySwiper"
