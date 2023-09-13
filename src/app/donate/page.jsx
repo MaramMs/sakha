@@ -10,7 +10,20 @@ const Donate = () => {
 const searchParams = useSearchParams();
 const project_id =parseInt(searchParams.get('projectId'));
 const [userModal, setUserModal] = useState(false);
-console.log(userModal ,'userModal');
+// const amount =parseInt(searchParams.get('amount'));
+    const [loading, setLoading] = useState(false);
+    const [userData,setUserData] = useState([{
+      email:'',
+      name:'',
+      phone:''
+    }])
+const handleUserDataInput = (e) =>{
+  const {name,value} = e.target
+setUserData({
+  ...userData,
+  [name] :value,
+})
+}
   const [amount, setAmount] = useState(0)
   const amountItems = [
     {
@@ -54,19 +67,47 @@ amount:'1000$'
   }
 
   const postPayRequest = async() =>{
+    setLoading(true);
     try {
-      const res = await axios.post('https://sakha.danatportal.com/api/donations',{
-      amount: parseInt(amount),
-       project_id
+      const res1 = await axios.post('https://sakha.danatportal.com/api/newDonation', {
+        amount: parseInt(amount),
+        project_id,
+        name: userData.name,
+        email: userData.email,
+        phone: userData.phone,
       });
+  
+      // Check if the first request was successful (you might need to adjust this condition based on the response structure)
+      if (res1.status === 200) {
+        const res2 = await axios.get('https://sakha.danatportal.com/api/pay',{
+          amount: parseInt(amount),
+          project_id,
+        });
+  
+        // Check if the second request was successful and has an invoiceURL
+        if (res2.data.IsSuccess === "true" && res2.data.Data && res2.data.Data.invoiceURL) {
+          const invoiceURL = res2.data.Data.invoiceURL;
+  
+          // Open the invoiceURL in a new tab
+          window.open(invoiceURL, '_blank');
+        }
+        // Handle the second response here if needed
+      } else {
+        // Handle the case where the first request was not successful
+        console.error('First request failed.');
+      }
     } catch (error) {
-      console.log(error,'error');
+      console.error('Error:', error);
+      // Handle the error if needed
+    } finally {
+      setLoading(false);
+      setUserModal(false);
     }
   }
   return (
     <div className='min-h-screen bg-[#F8F8F8]'>
         <div className='flex flex-col min-h-screen justify-between'>
-            <div className='p-[16px] flex flex-col gap-[8px]'>
+            <div className='p-[16px] flex flex-col  gap-[48px]'>
             <HomeUrgentNav title="Donate" />
   <div className='flex flex-col gap-y-[16px]'>
     <div className='bg-[#E7EFF4] border border-[#0062A0] h-[118px] flex flex-col gap-y-[8px] justify-center items-center px-[16px] py-[14px] rounded-[8px]'>
@@ -100,39 +141,44 @@ amount:'1000$'
   
   </div>
       
+  
 
+    </div>
 
+    <Input name='name' value={userData.name} placeholder='Name'   style={{marginBottom:'10px',border:'none'}} onChange={(e) => handleUserDataInput(e)}/>
+       <Input name='email' value={userData.email}placeholder='Email'  style={{marginBottom:'10px',border:'none'}} onChange={(e) => handleUserDataInput(e)}/>
+       <Input name='phone' value={userData.phone} placeholder='Phone'  style={{marginBottom:'10px',border:'none'}} onChange={(e) => handleUserDataInput(e)}/>
+ 
+
+  </div>
 
   <div className='flex gap-[8px] items-center'>
     <Checkbox className='bg-[#DBDBDB] rounded-[8px] w-[26px] h-[26px]'/>
     <p className='text-[#000] font-[400] text-[14px]'>Donate as anonymous </p>
 
   </div>
-    </div>
 
-  </div>
+ 
             
 
-            <div className="bg-[#fff] rounded-tr-[8px] h-[87px] flex justify-center items-center p-[10px] drop-shadow-[0px_0px_16px_rgba(235,235,235,1)]">
+     
+
+
+
+    </div>      
+    </div>
+
+    <div className="bg-[#fff] rounded-tr-[8px] h-[87px] flex justify-center items-center p-[10px] drop-shadow-[0px_0px_16px_rgba(235,235,235,1)]">
     <Button
+    loading={loading}
           className="bg-[#669640] text-[#fff] font-[900] text-[16px] uppercase rounded-[8px] w-full px-[16px] py-[14px] h-[48px] flex justify-center items-center"
-         onClick={()=>setUserModal(true)}
+         onClick={postPayRequest}
         >
       Pay
         </Button>
       </div>
-
-
-      {/* <Button type="primary" onClick={()=>setUserModal(true)} >
-        Open Modal
-      </Button> */}
-
-    </div>      
     </div>
-    </div>
-    {
-  userModal && <UserModal userModal={userModal} setUserModal={setUserModal} amount={amount}/>
-}
+
     </div>
   )
 }
