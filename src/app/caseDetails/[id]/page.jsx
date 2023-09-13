@@ -43,7 +43,12 @@ const CaseDetails = ({ params }) => {
 
   return (
     <div className="bg-[#F8F8F8] min-h-screen flex flex-col justify-between">
-      <div className="md:p-24  min-h-screen flex flex-col gap-[48px]">
+      <div className="md:px-24 md:py-[16px]  min-h-screen flex flex-col gap-[48px]">
+
+      <div className="flex gap-[8px]">
+              <img src="/images/tree.svg" width={39.86} height={39.86} />
+              <img src="/images/logo-home.svg" width={118} height={28} />
+            </div>
         <Row gutter={[16,16]}>
          
           <Col span={24} md={{span:12}}>
