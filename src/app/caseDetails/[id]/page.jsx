@@ -113,7 +113,7 @@ const CaseDetails = ({ params }) => {
                     {projectData.total_price}
                   </span>
                 </p>
-                <Progress percent={percentageRaised} showInfo={false} className="md:w-[60%]"/>
+                <Progress percent={percentageRaised} showInfo={false} />
 
                 <div className="flex justify-between  md:gap-[100px]">
                   <div className="flex gap-[8px] items-center">
@@ -630,8 +630,9 @@ const CaseDetails = ({ params }) => {
         </Row>
      
 
-        <div className=" flex-col gap-x-[8px] hidden md:block">
-            {projectData?.company_doners_count != 0 && (
+        <Row gutter={[16,16,]} className="hidden md:flex">
+          {projectData?.company_doners_count != 0 && (
+          <Col span={24} md={{span:12}}>
               <div className="bg-[#EFF4EB] flex flex-col h-[152px] px-[26px] py-[16px] rounded-[8px] gap-y-[10px]">
                 <div className="flex flex-col gap-y-[8px]">
                   <div className="flex flex-col justify-center items-center gap-y-[4px]">
@@ -673,8 +674,11 @@ const CaseDetails = ({ params }) => {
                   </Button>
                 </div>
               </div>
+          </Col>
             )}
-            {projectData?.single_doners_count != 0 && (
+          
+           {projectData?.single_doners_count != 0 && (
+           <Col span={24} md={{span:12}}>
               <div className="bg-[#EFF4EB] flex flex-col h-[152px] px-[26px] py-[16px] rounded-[8px] gap-y-[10px]">
                 <div className="flex flex-col gap-y-[8px]">
                   <div className="flex flex-col justify-center items-center gap-y-[4px]">
@@ -716,8 +720,9 @@ const CaseDetails = ({ params }) => {
                   </Button>
                 </div>
               </div>
+           </Col>
             )}
-          </div>
+          </Row>
 
         <div className="flex flex-col gap-[8px] p-[16px] md:hidden">
             <h3 className="text-[#000] text-[18px] font-[900]">Fundraiser</h3>
@@ -832,9 +837,9 @@ const CaseDetails = ({ params }) => {
 
           )}
         {projectData?.story && (
-            <div className="flex flex-col gap-[8px] md:text-center px-[16px]">
+            <div className="flex flex-col gap-[8px]  px-[16px]">
               <h3 className="text-[#000] text-[18px] font-[900] md:text-[40px]">Story</h3>
-              <p className="text-[#000] text-[12px] font-[300] md:w-[80%] md:m-auto">
+              <p className="text-[#000] text-[12px] font-[300] ">
                 {projectData.story}
              
               </p>
@@ -852,7 +857,7 @@ const CaseDetails = ({ params }) => {
        
       </div>
 
-      <div className="bg-[#fff] flex justify-between  rounded-tr-[8px] h-[87px] md:justify-center items-center p-[10px] drop-shadow-[0px_0px_16px_rgba(235,235,235,1)]">
+      <div className="bg-[#fff] flex flex-col gap-[10px] mb-[10px] rounded-tr-[8px] h-[145px] md:h-[84px] justify-center items-center p-[10px] drop-shadow-[0px_0px_16px_rgba(235,235,235,1)]">
           {projectData.kafala == 0 ? (
             <Link href={`/donate?projectId=${id}`}>
               <Button className="bg-[#669640] text-[#fff] font-[900] text-[16px] uppercase rounded-[8px] w-full px-[16px] py-[14px] h-[48px] flex justify-center items-center">
@@ -867,19 +872,35 @@ const CaseDetails = ({ params }) => {
             </Link>
           )}
 
-<div className="p-[16px]">
+{/* <div className="flex r justify-center items-center p-[10px] drop-shadow-[0px_0px_16px_rgba(235,235,235,1)]"> */}
   {deviceType === 'iOS' ?(
- <Button className="p-[16px] border border-[#669640] w-[60px] h-[60px]  bg-transparent flex justify-center items-center text-[#669640]">
-  <img src="/images/ios.png" alt="" className="w-[30px] h-[30px] max-w-[100%] max-h-[100%]" />
+    <Button  className=" bg-transparent w-[150px] p-0 border-[#669640] font-[900] text-[16px] uppercase rounded-[8px]  h-[48px]  flex justify-center items-center">
+  <img src="/images/ios.png" alt="" className="w-[100%] object-cover max-w-[100%] max-h-[100%]"/>
  </Button>
       ) : deviceType === 'Android' ? (
-<Button className="p-[16px] border border-[#669640]  bg-transparent flex justify-center items-center text-[#669640]">
-<img src="/images/android-logo.svg" alt="" className="w-[30px] h-[30px]"/>
+<Button  className=" bg-transparent w-[150px] p-0 border-[#669640] font-[900] text-[16px] uppercase rounded-[8px]  h-[48px]  flex justify-center items-center">
+<img src="/images/android-logo.svg" alt="" className="w-[100%] object-cover max-w-[100%] max-h-[100%]"/>
 </Button>
       ) : null
 }
-  </div>
+  {/* </div> */}
+
+
+
         </div>
+
+        {/* <div className="bg-[#669640] flex rounded-tr-[8px] h-[87px] justify-center items-center p-[10px] drop-shadow-[0px_0px_16px_rgba(235,235,235,1)]">
+  {deviceType === 'iOS' ?(
+ <Button  className="bg-[#669640] font-[900] text-[16px] uppercase rounded-[8px] w-full px-[16px] py-[14px] h-[48px] flex justify-center items-center">
+  <img src="/images/ios.png" alt="" className="max-w-[100%] max-h-[100%]" />
+ </Button>
+      ) : deviceType === 'Android' ? (
+<Button  className=" bg-transparent   font-[900] text-[16px] uppercase rounded-[8px] px-[16px]   flex justify-center items-center">
+<img src="/images/android-logo.svg" alt="" className="w-[100%] object-cover max-w-[100%] max-h-[100%]"/>
+</Button>
+      ) : null
+}
+  </div> */}
 
         <div>
   
