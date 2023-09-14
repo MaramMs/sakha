@@ -12,6 +12,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import HomeUrgentNav from "../../../../components/HomeUrgentNav";
 import PrayersCard from "../../../../components/PrayersCard";
 import axios from "axios";
+import { UAParser } from "ua-parser-js";
 
 const CaseDetails = ({ params }) => {
   console.log(params.id, "patames");
@@ -39,6 +40,29 @@ const CaseDetails = ({ params }) => {
       }
     };
     getDetailsProject();
+  }, []);
+
+  const [deviceType, setDeviceType] = useState('');
+
+  useEffect(() => {
+    var parser = new UAParser();
+    console.log(parser,'parser');
+    var result = parser.getResult();
+    console.log(result , 'result');
+    var device = result.device.type;
+    console.log(device,'device');
+
+    if (result.os.name === "iOS") {
+      device = "iOS";
+    } else if (result.os.name === "Android") {
+      device = "Android";
+    } else if (result.os.name === "Windows") {
+      device = "Windows";
+    } else if (result.os.name === "Mac OS") {
+      device = "Mac OS";
+    }
+
+    setDeviceType(device);
   }, []);
 
   return (
@@ -828,7 +852,7 @@ const CaseDetails = ({ params }) => {
        
       </div>
 
-      <div className="bg-[#fff]  rounded-tr-[8px] h-[87px] flex justify-center items-center p-[10px] drop-shadow-[0px_0px_16px_rgba(235,235,235,1)]">
+      <div className="bg-[#fff] flex justify-between  rounded-tr-[8px] h-[87px] md:justify-center items-center p-[10px] drop-shadow-[0px_0px_16px_rgba(235,235,235,1)]">
           {projectData.kafala == 0 ? (
             <Link href={`/donate?projectId=${id}`}>
               <Button className="bg-[#669640] text-[#fff] font-[900] text-[16px] uppercase rounded-[8px] w-full px-[16px] py-[14px] h-[48px] flex justify-center items-center">
@@ -842,7 +866,24 @@ const CaseDetails = ({ params }) => {
               </Button>
             </Link>
           )}
+
+<div className="p-[16px]">
+  {deviceType === 'iOS' ?(
+ <Button className="p-[16px] border border-[#669640] w-[60px] h-[60px]  bg-transparent flex justify-center items-center text-[#669640]">
+  <img src="/images/ios.png" alt="" className="w-[30px] h-[30px] max-w-[100%] max-h-[100%]" />
+ </Button>
+      ) : deviceType === 'Android' ? (
+<Button className="p-[16px] border border-[#669640]  bg-transparent flex justify-center items-center text-[#669640]">
+<img src="/images/android-logo.svg" alt="" className="w-[30px] h-[30px]"/>
+</Button>
+      ) : null
+}
+  </div>
         </div>
+
+        <div>
+  
+    </div>
     </div>
   );
 };
